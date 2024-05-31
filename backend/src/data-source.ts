@@ -16,7 +16,7 @@ async function getSecretValue(secretName: string) {
     }
 };
 
-async function connectToDatabase() {
+export async function AppDataSource() {
     const secretName = 'learn-it-right-way';
     const credentials = await getSecretValue(secretName);
 
@@ -37,6 +37,3 @@ async function connectToDatabase() {
     return appDataSource;
 }
 
-
-
-export const AppDataSource = connectToDatabase();

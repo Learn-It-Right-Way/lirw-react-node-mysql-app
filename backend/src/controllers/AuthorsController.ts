@@ -6,7 +6,8 @@ import { Book } from "../entity/Book";
 export class AuthorsController {
     async get(req: any, res: any) {
         try {
-            const authorRepository = AppDataSource.getRepository(Author);
+            const appDataSource = await AppDataSource();
+            const authorRepository = appDataSource.getRepository(Author);
             const authors = await authorRepository.find();
 
             res.status(200).json({
@@ -32,7 +33,8 @@ export class AuthorsController {
             author.createdAt = new Date();
             author.updatedAt = new Date();
 
-            const authorRepository = AppDataSource.getRepository(Author);
+            const appDataSource = await AppDataSource();
+            const authorRepository = appDataSource.getRepository(Author);
             const results = await authorRepository.save(author);
 
             if (results) {
@@ -59,7 +61,8 @@ export class AuthorsController {
             const { id } = params;
             const { name, birthday, bio } = body;
 
-            const authorRepository = AppDataSource.getRepository(Author);
+            const appDataSource = await AppDataSource();
+            const authorRepository = appDataSource.getRepository(Author);
             const author = await authorRepository.findOneBy({
                 id: id,
             });
@@ -98,7 +101,8 @@ export class AuthorsController {
             const { params } = req;
             const { id } = params;
 
-            const authorRepository = AppDataSource.getRepository(Author);
+            const appDataSource = await AppDataSource();
+            const authorRepository = appDataSource.getRepository(Author);
             const author = await authorRepository.findOneBy({
                 id: id,
             });

@@ -6,7 +6,8 @@ import { Author } from "../entity/Author";
 export class BooksController {
     async get(req: any, res: any) {
         try {
-            const bookRepository = AppDataSource.getRepository(Book);
+            const appDataSource = await AppDataSource();
+            const bookRepository = appDataSource.getRepository(Book);
             const books = await bookRepository.find({
                 relations: {
                     author: true,
@@ -35,7 +36,8 @@ export class BooksController {
                 author: authorId,
             } = body;
 
-            const authorRepository = AppDataSource.getRepository(Author);
+            const appDataSource = await AppDataSource();
+            const authorRepository = appDataSource.getRepository(Author);
             const author = await authorRepository.findOneBy({
                 id: authorId,
             });
@@ -50,7 +52,7 @@ export class BooksController {
                 book.createdAt = new Date();
                 book.updatedAt = new Date();
 
-                const bookRepository = AppDataSource.getRepository(Book);
+                const bookRepository = appDataSource.getRepository(Book);
                 const results = await bookRepository.save(book);
 
                 if (results) {
@@ -90,13 +92,14 @@ export class BooksController {
                 author: authorId,
             } = body;
 
-            const bookRepository = AppDataSource.getRepository(Book);
+            const appDataSource = await AppDataSource();
+            const bookRepository = appDataSource.getRepository(Book);
             const book = await bookRepository.findOneBy({
                 id: id,
             });
 
             if (book) {
-                const authorRepository = AppDataSource.getRepository(Author);
+                const authorRepository = appDataSource.getRepository(Author);
                 const author = await authorRepository.findOneBy({
                     id: authorId,
                 });
@@ -145,7 +148,8 @@ export class BooksController {
             const { params } = req;
             const { id } = params;
 
-            const bookRepository = AppDataSource.getRepository(Book);
+            const appDataSource = await AppDataSource();
+            const bookRepository = appDataSource.getRepository(Book);
             const book = await bookRepository.findOneBy({
                 id: id,
             });
