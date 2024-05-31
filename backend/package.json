@@ -21,6 +21,7 @@
       "typescript": "4.5.2"
    },
    "dependencies": {
+      "aws-sdk": "^2.1631.0",
       "cors": "^2.8.5",
       "express": "^4.18.2",
       "express-validator": "^7.0.1",
