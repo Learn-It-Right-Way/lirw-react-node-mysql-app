@@ -1,2 +1,2 @@
-# react-node-mysql-app
-Full stack web application using ReactJS, NodeJS and MySQL.
+# lirw-react-node-mysql-app
+A fullstack web application using ReatJS, Node ExpressJS with MySQL.

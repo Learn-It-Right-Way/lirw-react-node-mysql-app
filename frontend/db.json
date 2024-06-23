@@ -1,0 +1,144 @@
+{
+    "books": [
+        {
+            "id": 1,
+            "title": "Harry Potter and the Sorcerer's Stone",
+            "releaseDate": "1997-06-26",
+            "description": "On his birthday, Harry Potter discovers that he is the son of two well-known wizards, from whom he has inherited magical powers. He must attend a famous school of magic and sorcery, where he establishes a friendship with two young men who will become his companions on his adventure. During his first year at Hogwarts, he discovers that a malevolent and powerful wizard named Voldemort is in search of a philosopher's stone that prolongs the life of its owner.",
+            "pages": 223,
+            "name": "J.K. Rowling (Joanne Kathleen Rowling)",
+            "birthday": "1965-07-31",
+            "bio": "J.K. Rowling is a British author best known for writing the Harry Potter fantasy series. The series has won multiple awards and sold over 500 million copies, becoming the best-selling book series in history. Rowling has also written other novels, including The Casual Vacancy and the Cormoran Strike crime series under the pen name Robert Galbraith."
+        },
+        {
+            "id": 2,
+            "title": "Harry Potter and the chamber of secrets",
+            "releaseDate": "1998-07-02",
+            "description": "Harry Potter and the sophomores investigate a malevolent threat to their Hogwarts classmates, a menacing beast that hides within the castle.",
+            "pages": 251,
+            "name": "J.K. Rowling (Joanne Kathleen Rowling)",
+            "birthday": "1965-07-31",
+            "bio": "J.K. Rowling is a British author best known for writing the Harry Potter fantasy series. The series has won multiple awards and sold over 500 million copies, becoming the best-selling book series in history. Rowling has also written other novels, including The Casual Vacancy and the Cormoran Strike crime series under the pen name Robert Galbraith."
+        },
+        {
+            "id": 3,
+            "title": "Harry Potter and the Prisoner of Azkaban",
+            "releaseDate": "1999-07-08",
+            "description": "Harry's third year of studies at Hogwarts is threatened by Sirius Black's escape from Azkaban prison. Apparently, it is a dangerous wizard who was an accomplice of Lord Voldemort and who will try to take revenge on Harry Potter.",
+            "pages": 317,
+            "name": "J.K. Rowling (Joanne Kathleen Rowling)",
+            "birthday": "1965-07-31",
+            "bio": "J.K. Rowling is a British author best known for writing the Harry Potter fantasy series. The series has won multiple awards and sold over 500 million copies, becoming the best-selling book series in history. Rowling has also written other novels, including The Casual Vacancy and the Cormoran Strike crime series under the pen name Robert Galbraith."
+        },
+        {
+            "id": 4,
+            "title": "Harry Potter and the Goblet of Fire",
+            "releaseDate": "2000-07-08",
+            "description": "Hogwarts prepares for the Triwizard Tournament, in which three schools of wizardry will compete. To everyone's surprise, Harry Potter is chosen to participate in the competition, in which he must fight dragons, enter the water and face his greatest fears.",
+            "pages": 636,
+            "name": "J.K. Rowling (Joanne Kathleen Rowling)",
+            "birthday": "1965-07-31",
+            "bio": "J.K. Rowling is a British author best known for writing the Harry Potter fantasy series. The series has won multiple awards and sold over 500 million copies, becoming the best-selling book series in history. Rowling has also written other novels, including The Casual Vacancy and the Cormoran Strike crime series under the pen name Robert Galbraith."
+        },
+        {
+            "id": 5,
+            "title": "Harry Potter and the Order of the Phoenix",
+            "releaseDate": "2003-06-21",
+            "description": "In his fifth year at Hogwarts, Harry discovers that many members of the wizarding community do not know the truth about his encounter with Lord Voldemort. Cornelius Fudge, Minister of Magic, appoints Dolores Umbridge as Defense Against the Dark Arts teacher because he believes that Professor Dumbledore plans to take over his job. But his teachings are inadequate, so Harry prepares the students to defend the school against evil.",
+            "pages": 766,
+            "name": "J.K. Rowling (Joanne Kathleen Rowling)",
+            "birthday": "1965-07-31",
+            "bio": "J.K. Rowling is a British author best known for writing the Harry Potter fantasy series. The series has won multiple awards and sold over 500 million copies, becoming the best-selling book series in history. Rowling has also written other novels, including The Casual Vacancy and the Cormoran Strike crime series under the pen name Robert Galbraith."
+        },
+        {
+            "id": 6,
+            "title": "Harry Potter and the Half-Blood Prince",
+            "releaseDate": "2005-07-16",
+            "description": "Harry discovers a powerful book and, while trying to discover its origins, collaborates with Dumbledore in the search for a series of magical objects that will aid in the destruction of Lord Voldemort.",
+            "pages": 607,
+            "name": "J.K. Rowling (Joanne Kathleen Rowling)",
+            "birthday": "1965-07-31",
+            "bio": "J.K. Rowling is a British author best known for writing the Harry Potter fantasy series. The series has won multiple awards and sold over 500 million copies, becoming the best-selling book series in history. Rowling has also written other novels, including The Casual Vacancy and the Cormoran Strike crime series under the pen name Robert Galbraith."
+        },
+        {
+            "id": 7,
+            "title": "Harry Potter and the Deathly Hallows",
+            "releaseDate": "Jul 21, 2007",
+            "description": "Harry, Ron and Hermione go on a dangerous mission to locate and destroy the secret of Voldemort's immortality and destruction - the Horcruces. Alone, without the guidance of their teachers or the protection of Professor Dumbledore, the three friends must lean on each other more than ever. But there are Dark Forces in between that threaten to tear them apart. Harry Potter is getting closer and closer to the task for which he has been preparing since the first day he set foot in Hogwarts: the last battle with Voldemort.",
+            "pages": 607,
+            "name": "J.K. Rowling (Joanne Kathleen Rowling)",
+            "birthday": "1965-07-31",
+            "bio": "J.K. Rowling is a British author best known for writing the Harry Potter fantasy series. The series has won multiple awards and sold over 500 million copies, becoming the best-selling book series in history. Rowling has also written other novels, including The Casual Vacancy and the Cormoran Strike crime series under the pen name Robert Galbraith."
+        },
+        {
+            "id": 8,
+            "title": "Harry Potter and the Cursed Child",
+            "releaseDate": "2016-07-30",
+            "description": "Harry's second son entered Hogwarts, but in Slytherin. His relationship with Harry is getting worse and he became close friends with Draco's son, Scorpius Malfoy who is said to be Lord Voldemort's son.",
+            "pages": 336,
+            "name": "J.K. Rowling (Joanne Kathleen Rowling)",
+            "birthday": "1965-07-31",
+            "bio": "J.K. Rowling is a British author best known for writing the Harry Potter fantasy series. The series has won multiple awards and sold over 500 million copies, becoming the best-selling book series in history. Rowling has also written other novels, including The Casual Vacancy and the Cormoran Strike crime series under the pen name Robert Galbraith."
+        },
+        {
+            "id": 9,
+            "title": "Harry Potter and the Cursed Child",
+            "releaseDate": "2016-07-30",
+            "description": "Harry's second son entered Hogwarts, but in Slytherin. His relationship with Harry is getting worse and he became close friends with Draco's son, Scorpius Malfoy who is said to be Lord Voldemort's son.",
+            "pages": 336,
+            "name": "J.K. Rowling (Joanne Kathleen Rowling)",
+            "birthday": "1965-07-31",
+            "bio": "J.K. Rowling is a British author best known for writing the Harry Potter fantasy series. The series has won multiple awards and sold over 500 million copies, becoming the best-selling book series in history. Rowling has also written other novels, including The Casual Vacancy and the Cormoran Strike crime series under the pen name Robert Galbraith."
+        },
+        {
+            "id": 10,
+            "title": "Pride and Prejudice",
+            "releaseDate": "1813-01-28",
+            "description": "An English novel of manners by Jane Austen, first published in 1813. The story centres on the relationships among the Bennet sisters, in particular Elizabeth Bennet the middle daughter, and the wealthy Mr. Darcy. Austen satirizes the social classes of the English gentry through a witty and ironic narrative voice.",
+            "pages": 224,
+            "name": "Jane Austen",
+            "birthday": "Dec 16, 1775",
+            "bio": "Jane Austen was an English novelist known for her wit, social commentary, and romantic stories. Her six major novels, which explore themes of love, marriage, and money, have earned her a place as one of the greatest writers in the English language."
+        },
+        {
+            "id": 11,
+            "title": "To Kill a Mockingbird",
+            "releaseDate": "1960-07-11",
+            "description": "The Pulitzer Prize-winning novel tells the story of Scout Finch, a young girl growing up in Alabama during the Great Depression. Scout's father, Atticus Finch, is a lawyer who defends Tom Robinson, a black man wrongly accused of assaulting a white woman. The novel explores themes of racial injustice, prejudice, and the importance of courage and compassion.",
+            "pages": 324,
+            "name": "Harper Lee",
+            "birthday": "Apr 28, 1926",
+            "bio": "Harper Lee was an American novelist best known for her Pulitzer Prize-winning novel To Kill a Mockingbird. The novel explores themes of racial injustice and the importance of compassion. Lee published a sequel, Go Set a Watchman, in 2015."
+        },
+        {
+            "id": 12,
+            "title": "The Lord of the Rings: The Fellowship of the Ring",
+            "releaseDate": "Jul 29, 1954",
+            "description": "The first book in J.R.R. Tolkien's epic fantasy trilogy, The Lord of the Rings. The Fellowship of the Ring follows hobbit Frodo Baggins as he inherits the One Ring, an evil artifact of power created by the Dark Lord Sauron. Frodo embarks on a quest to destroy the Ring in the fires of Mount Doom, accompanied by a fellowship of eight companions.",
+            "pages": 482,
+            "name": "J.R.R. Tolkien",
+            "birthday": "1892-01-03",
+            "bio": "J.R.R. Tolkien was a British philologist and writer best known for his fantasy novels The Hobbit and The Lord of the Rings. Tolkien's works have had a profound influence on the fantasy genre and popular culture."
+        },
+        {
+            "id": 13,
+            "title": "Frankenstein; or, The Modern Prometheus",
+            "releaseDate": "1818-03-03",
+            "description": "A Gothic novel by Mary Shelley that tells the story of Victor Frankenstein, a young scientist who creates a grotesque creature in an unorthodox scientific experiment. Frankenstein is horrified by his creation and abandons it, but the creature seeks revenge. The novel explores themes of scientific responsibility, creation versus destruction, and the nature of good and evil.",
+            "pages": 211,
+            "name": "Mary Shelley",
+            "birthday": "Aug 31, 1797",
+            "bio": "Mary Shelley was a British novelist, playwright, and short story writer, the daughter of Mary Wollstonecraft Godwin and the wife of poet Percy Bysshe Shelley. Frankenstein, or, The Modern Prometheus (1818) is her most famous work."
+        },
+        {
+            "id": 14,
+            "title": "The Hitchhiker's Guide to the Galaxy",
+            "releaseDate": "1979-10-12",
+            "description": "A comic science fiction comedy series created by Douglas Adams. The story follows the comedic misadventures of Arthur Dent, a hapless Englishman, following the destruction of the Earth by the Vogons, a race of unpleasant bureaucratic aliens. Arthur escapes with his friend Ford Prefect, who reveals himself to be an undercover researcher for the titular Hitchhiker's Guide to the Galaxy, a galactic encyclopedia containing information about anything and everything.",
+            "pages": 184,
+            "name": "Douglas Adams",
+            "birthday": "Mar 11, 1952",
+            "bio": "Douglas Adams was an English science fiction writer, satirist, humorist, dramatist, screenwriter, and occasional actor. He is best known for the Hitchhiker's Guide to the Galaxy comedy series, which inspired a radio comedy, several books, stage shows, comic books, a 1981 TV series, a 1984 video game, a 2005 feature film, and a 2008 sequel film."
+        }
+    ]
+}
