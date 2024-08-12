@@ -20,7 +20,12 @@ db.connect((err) => {
    logger.info('Connected to MySQL Database');
 });
 
-// Add your routes here
+/* Add your routes here */
+//Health Checking
+app.get('/health',(req,res)=>{
+   res.json("Health check endpoint");
+});
+
 app.use('/api', routes);
 
 module.exports = app;
