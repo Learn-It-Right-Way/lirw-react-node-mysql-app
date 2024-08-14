@@ -249,6 +249,14 @@ EOF"
 sudo systemctl restart nginx 
 ```
 
+#### Stress Testing
+```bash
+sudo yum install stress –y 
+stress --cpu 4 --timeout 180s
+
+top
+```
+
 #### Configure Application Tier
 For Auto Scaling Group setup.
 
