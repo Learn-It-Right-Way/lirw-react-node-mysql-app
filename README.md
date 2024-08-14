@@ -257,6 +257,18 @@ stress --cpu 4 --timeout 180s
 top
 ```
 
+#### Connet to RDS instance via SSH
+##### SSH tunneling through a bastion host
+```bash
+ssh -i /path/to/your/private-key.pem -N -L 3307:<RDS-Endpoint>:3306 ec2-user@<Bastion-Host-IP>
+```
+
+##### SSH tunneling through a bastion host and a private EC2 (SSH chaining)
+```bash
+ssh-add /path/to/your/private-key.pem
+ssh -A -L 3307:localhost:3306 ec2-user@<public-IP> -t "ssh -L 3306:<rds-endpoint>:3306 ec2-user@<private-IP>"
+```
+
 #### Configure Application Tier
 For Auto Scaling Group setup.
 
