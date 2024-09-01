@@ -244,3 +244,38 @@ sudo ln -s /opt/certbot/bin/certbot/ /usr/bin/certbot
 ```bash
 sudo certbot --nginx
 ```
+###Once the certbot is installed, you can request and install the certificates into the nginx configuration.
+During this process it promts to enter email address which will be used for renewal and security patches
+Enter the email address and press enter
+Do you want to agree all the Terms & Conditions
+Yes or NO: press Y
+Would you be willing,Once your certificate is issued successfully can we share the email address with the Electronic Frontier Foundation, a founding partner of the Let's Encrypt project and the non-profit organisation that develops Certbot.
+Enter Yes or No: Press Y
+You will get a message that your Account registered.
+
+Which names would you like to activate Https for:
+We recommend selecting either all domains, or all domains in a VirtualHost/server block.
+----------------------------------------------------------------------------------------
+1.radhasrinivas.com
+2.www.radhasrinivas.com
+----------------------------------------------------------------------------------------
+Select the appropriate numbers separated by commas and/or spaces, or leave input
+blank to select all options shown (Enter 'c' to cancel): 1 2 or    1,2
+post that you will be getting a message below
+Requesting a certificate for radhasrinivas.com and www.radhasrinivas.com
+
+Successfully received a certificate.
+This certificate expires on 2024-08-24
+These files will be updated when the certificate renews.
+
+Deploying certificate
+Successfully deployed certificate for radhasrinivas.com to /etc/nginx/nginx.conf
+Successfully deployed certificate for www.radhasrinivas.com to /etc/nginx/nginx.conf
+Congratulations! You have successfully enabled HTTPS on https://radhasrinivas.com and https://www.radhasrinivas.com
+
+Next Steps:
+- The certificate will need to be renewed before it expires.Certbot can automatically renew the certificate in the background, but you may need to take steps to enable that functionality.
+  See https://certbot.org/renewal-setup for instructions.
+--------------
+sudo systemctl restart nginx and try to search with the domain and the subdomain for which you have received ssl certificates.
+
