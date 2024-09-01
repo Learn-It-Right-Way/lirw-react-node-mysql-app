@@ -215,3 +215,32 @@ echo "Welcome to Presentation Tier EC2 instance in Availability Zone B." > /usr/
 systemctl start nginx 
 systemctl enable nginx
 ```
+To secure https connections and encrypt we make use of certbot
+
+```bash
+sudo dnf install python3 augeas-libs
+```
+
+```bash
+sudo yum remove certbot
+```
+
+```bash
+sudo python3 -m venv /opt/certbot/
+```
+
+```bash
+sudo /opt/certbot/bin/pip install --upgrade pip
+```
+ 
+```bash
+sudo /opt/certbot/bin/pip install certbot certbot-nginx
+```
+
+```bash
+sudo ln -s /opt/certbot/bin/certbot/ /usr/bin/certbot
+```
+
+```bash
+sudo certbot --nginx
+```
