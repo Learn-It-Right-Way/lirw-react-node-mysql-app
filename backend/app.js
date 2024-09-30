@@ -1,5 +1,4 @@
 const express = require('express');
-const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
 const cors = require('cors');
@@ -22,7 +21,8 @@ db.connect((err) => {
 
 /* Add your routes here */
 //Health Checking
-app.get('/health',(req,res)=>{
+app.get('/health',(req,res) => {
+   logger.info('Health check endpoint');
    res.json("Health check endpoint");
 });
 
