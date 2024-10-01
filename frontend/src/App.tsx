@@ -178,7 +178,7 @@ function App() {
   // };
 
   return (
-    <div className='h-screen font-mono p-4'>
+    <div className='h-screen font-mono p-4 bg-cyan-400'>
       <header className='py-2 border-b'>
         <h1 className='text-center font-bold text-5xl'>Dashboard</h1>
       </header>
