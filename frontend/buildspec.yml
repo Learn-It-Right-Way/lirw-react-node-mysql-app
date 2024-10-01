@@ -16,10 +16,7 @@ phases:
     commands:
       - echo "Creating .env file in frontend directory..."
       - echo "VITE_API_URL='$VITE_API_URL'" > .env
-      - echo "Fetching GitHub Tag or Commit ID..."
-      - TAG_VERSION=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION)
-      - echo "Tag version $TAG_VERSION"
-      - echo "VERSION='$TAG_VERSION'" > .env
+      - echo "Environment variables have been saved to .env"
   build:
     commands:
       - echo Building the React app...
