@@ -13,7 +13,12 @@ BooksController.prototype.get = async (req, res) => {
          }
 
          res.status(200).json({
-            books: books,
+            books: books.map(book => ({
+               ...book,
+               releaseDate: new Date(book.releaseDate).toLocaleDateString("en-CA"),
+               createdAt: new Date(book.createdAt).toLocaleDateString("en-CA"),
+               updatedAt: new Date(book.updatedAt).toLocaleDateString("en-CA"),
+            })),
          });
       });
    } catch (error) {

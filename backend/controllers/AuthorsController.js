@@ -12,7 +12,12 @@ AuthorsController.prototype.get = async (req, res) => {
          }
 
          res.status(200).json({
-            authors: authors,
+            authors: authors.map(author => ({
+               ...author,
+               birthday: new Date(author.birthday).toLocaleDateString("en-CA"),
+               createdAt: new Date(author.createdAt).toLocaleDateString("en-CA"),
+               updatedAt: new Date(author.updatedAt).toLocaleDateString("en-CA"),
+            })),
          });
       });
    } catch (error) {
