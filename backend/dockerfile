@@ -1,0 +1,8 @@
+FROM node:18
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3200
+RUN npm install -g pm2
+CMD ["pm2-runtime", "start", "ecosystem.config.js"]
