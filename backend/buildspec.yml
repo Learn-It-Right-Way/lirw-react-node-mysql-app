@@ -1,0 +1,58 @@
+version: 0.2
+
+env:
+  variables:
+    NODE_ENV: "production"
+    PORT: "3200"
+    LOG_DIR: "/var/log/react-node-mysql-app/backend"
+  parameter-store:
+    DB_PASSWORD: "/nodeapp/db/password"
+    DB_HOST: "/nodeapp/db/hostname"
+    DB_PORT: "/nodeapp/db/port"
+    DB_USER: "/nodeapp/db/user"
+    DB_NAME: "/nodeapp/db/name"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo Navigating to the backend directory...
+      - cd backend
+
+  pre_build:
+    commands:
+      - echo "Printing SSM parameters..."
+      - echo "DB_PASSWORD $DB_PASSWORD"
+      - echo "DB_HOST $DB_HOST"
+      - echo "DB_PORT $DB_PORT"
+      - echo "DB_USER $DB_USER"
+      - echo "DB_NAME $DB_NAME"
+      - echo "Setting up environment for backend"
+
+  build:
+    commands:
+      - echo "Nothing to build for backend"
+      - echo "Create a .env file for Node.js to use"
+      - echo "DB_HOST='$DB_HOST'" >> .env
+      - echo "DB_PORT='$DB_PORT'" >> .env
+      - echo "DB_USER='$DB_USER'" >> .env
+      - echo "DB_PASSWORD='$DB_PASSWORD'" >> .env
+      - echo "DB_NAME='$DB_NAME'" >> .env
+      - echo "NODE_ENV='$NODE_ENV'" >> .env
+      - echo "PORT='$PORT'" >> .env
+      - echo "LOG_DIR='$LOG_DIR'" >> .env
+      - echo "Environment variables have been saved to .env"
+      - cd ..
+
+  post_build:
+    commands:
+      - echo "Listing files in backend directory..."
+      - ls -la backend/
+      - echo "Post-build steps for backend completed"
+
+artifacts:
+  files:
+      - '**/*'
+  base-directory: backend
+  discard-paths: no

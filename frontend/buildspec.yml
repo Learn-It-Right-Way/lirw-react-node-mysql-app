@@ -1,0 +1,38 @@
+version: 0.2
+
+env:
+  variables:
+    VITE_API_URL: "/api"
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20  # Specify the Node.js version
+    commands:
+      - echo Navigating to the frontend directory...
+      - cd frontend
+      - echo Installing dependencies...
+      - npm install
+  pre_build:
+    commands:
+      - echo "Creating .env file in frontend directory..."
+      - echo "VITE_API_URL='$VITE_API_URL'" > .env
+      - echo "Environment variables have been saved to .env"
+  build:
+    commands:
+      - echo Building the React app...
+      - npm run build
+  post_build:
+    commands:
+      - echo Build completed. Preparing artifacts for deployment
+      - echo Copying appspec.yml to dist directory...
+      - cp appspec.yml dist/ || echo "Failed to copy appspec.yml"
+      - echo Copying scripts directory to dist directory...
+      - cp -R scripts/ dist/ || echo "Failed to copy scripts directory"
+artifacts:
+  files:
+    - '**/*'
+  base-directory: frontend/dist
+  discard-paths: no
+cache:
+  paths:
+    - frontend/node_modules/**/*  # Caches node_modules for the frontend app to speed up future builds
