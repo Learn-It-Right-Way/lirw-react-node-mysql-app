@@ -18,7 +18,7 @@ phases:
       nodejs: 20
     commands:
       - echo Navigating to the backend directory...
-      - cd backend
+      - cd src/backend
 
   pre_build:
     commands:
