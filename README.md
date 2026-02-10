@@ -12,206 +12,259 @@ This project is a full-stack web application built using React js for the fronte
 #### Authors
 ![Dashboard](./frontend/public/ss/authors.png)
 
-
-## Connecting to private EC2 instance via a bastion host
-1. To change the ssh key permission:
+## Connet to RDS instance via SSH
+#### To change the ssh key permission:
 
 ```bash
 chmod 400 your_key.pem
 ```
 
-2. To start ssh agent:
+#### To start ssh agent:
 
 ```bash
 eval "$(ssh-agent -s)"  
 ```
 
-3. To add key to ssh agent:
+#### To add key to ssh agent:
 
 ```bash
 ssh-add your_key.pem
 ```
 
-4. To ssh into bastion host with agent forwarding:
-
+#### SSH tunneling through a bastion host
 ```bash
-ssh -A ec2-user@bastion_host_public_ip
-```
-
-5. To connect private instance from the bastion host:
-
-```bash
-ssh ec2-user@private_instance_private_ip 
-```
-
-## Setting up the Data Tier
-#### Install MySQL
-1. To download MySQL repository package:
-
-```bash
-wget https://dev.mysql.com/get/mysql80-community-release-el9-1.noarch.rpm
-```
-
-2. To verify the package download:
-
-```bash
-ls -lrt 
-```
-
-3. To install MySQL repository package:
-
-```bash
-sudo dnf install -y mysql80-community-release-el9-1.noarch.rpm 
-```
-
-4. To import GPG key: 
-
-```bash
-sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2023 
-```
-
-5. To update package index:
-
-```bash
-sudo dnf update –y 
-```
-
-6. To install MySQL server:
-
-```bash
-sudo dnf install -y mysql-community-server  
-```
-
-7. To start the mysql service:
-
-```bash
-sudo systemctl start mysqld
-```
-
-8. To enable mysql to start on boot:
-
-```bash
-sudo systemctl enable mysqld 
-```
-
-9. To secure the mysql installation:
-
-```bash
-sudo grep 'temporary password' /var/log/mysqld.log 
-
-sudo mysql_secure_installation 
-```
-
-10. To create database and restore data, please refer SQL scripts on [db.sql](./backend/db.sql) file.
-
-
-## Setting up the Application Tier
-#### Install GIT
-```bash
-sudo yum update -y
-
-sudo yum install git -y
-
-git — version
-```
-
-#### Clone repository
-```bash
-git clone https://github.com/learnItRightWay01/react-node-mysql-app.git
-```
-
-#### Install node.js
-1. To install node version manager (nvm)
-```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-```
-
-2. To load nvm
-```bash
-source ~/.bashrc
-```
-
-3. To use nvm to install the latest LTS version of Node.js
-```bash
-nvm install --lts
-```
-
-4. To test that Node.js is installed and running
-```bash
-node -e "console.log('Running Node.js ' + process.version)"
+ssh -i /path/to/your/private-key.pem -N -L 3307:<RDS-Endpoint>:3306 ec2-user@<Bastion-Host-IP>
 ```
 
 ## Setting up the Presentation Tier
-#### Install GIT
-```
-PLEASE REFER ABOVE
-```
+#### User data script
 
-#### Clone repository
-```
-PLEASE REFER ABOVE
-```
-
-#### Install node.js
-```
-PLEASE REFER ABOVE
-```
-
-#### Install NGINX
 ```bash
-dnf search nginx
+#!/bin/bash
+# Update package list and install required packages
+sudo yum update -y
 
-sudo dnf install nginx
+# Install NGINX
+sudo yum install -y nginx
 
-sudo systemctl restart nginx 
+# Start and enable NGINX
+sudo systemctl start nginx
+sudo systemctl enable nginx
 
-nginx -v
-```
+# Define variables
+APP_TIER_ALB_URL="http://<internal-application-tier-alb-end-point.region.elb.amazonaws.com>"  # Replace with your actual alb endpoint
+NGINX_CONF="/etc/nginx/nginx.conf"
+SERVER_NAME="<domain subdomain>"  # Replace with your actual domain name
 
-#### Copy react.js build files
-```bash
-sudo cp -r dist /usr/share/nginx/html 
-```
+# Backup existing NGINX configuration
+sudo cp $NGINX_CONF ${NGINX_CONF}.bak
 
-#### Update NGINX config
-1. Server name and root
-```
-server_name    domain.com www.subdomain.com
-root           /usr/share/nginx/html/dist
-```
+# Write new NGINX configuration
+sudo tee $NGINX_CONF > /dev/null <<EOL
+user nginx;
+worker_processes auto;
 
-2. Setup reverse proxy
-```
-location /api { 
-   proxy_pass http://application_tier_instance_private_ip:3200/api; 
+error_log /var/log/nginx/error.log warn;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 1024;
 }
-```
 
-3. Restart NGINX
-```
+http {
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
+
+    log_format main '\$remote_addr - \$remote_user [\$time_local] "\$request" '
+                    '\$status \$body_bytes_sent "\$http_referer" '
+                    '"\$http_user_agent" "\$http_x_forwarded_for"';
+
+    access_log /var/log/nginx/access.log main;
+
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+    types_hash_max_size 2048;
+
+    include /etc/nginx/conf.d/*.conf;
+}
+EOL
+
+# Create a separate NGINX configuration file
+sudo tee /etc/nginx/conf.d/presentation-tier.conf > /dev/null <<EOL
+server {
+    listen 80;
+    server_name $SERVER_NAME;
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+
+    #health check
+    location /health {
+        default_type text/html;
+        return 200 "<!DOCTYPE html><p>Health check endpoint</p>\n";
+    }
+
+    location / {
+        try_files \$uri /index.html;
+    }
+
+    location /api/ {
+        proxy_pass $APP_TIER_ALB_URL;
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto \$scheme;
+    }
+}
+EOL
+
+
+# Restart NGINX to apply the new configuration
 sudo systemctl restart nginx
+
+# Install CloudWatch agent
+sudo yum install -y amazon-cloudwatch-agent
+
+# Create CloudWatch agent configuration
+sudo tee /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json > /dev/null <<EOL
+{
+  "logs": {
+    "logs_collected": {
+      "files": {
+        "collect_list": [
+         {
+            "file_path": "/var/log/nginx/access.log",
+            "log_group_name": "nginx-logs-frontend",
+            "log_stream_name": "{instance_id}-nginx-access",
+            "timestamp_format": "%b %d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/log/nginx/error.log",
+            "log_group_name": "nginx-logs-frontend",
+            "log_stream_name": "{instance_id}-nginx-error",
+            "timestamp_format": "%b %d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/log/aws/codedeploy-agent/codedeploy-agent.log",
+            "log_group_name": "codedeploy-agent-logs-frontend",
+            "log_stream_name": "{instance_id}-agent-log"
+          },
+          {
+            "file_path": "/opt/codedeploy-agent/deployment-root/deployment-logs/codedeploy-agent-deployments.log",
+            "log_group_name": "codedeploy-agent-logs-frontend",
+            "log_stream_name": "{instance_id}-codedeploy-agent-deployment-log"
+          },
+          {
+            "file_path": "/tmp/codedeploy-agent.update.log",
+            "log_group_name": "codedeploy-agent-logs-frontend",
+            "log_stream_name": "{instance_id}-codedeploy-agent-updater-log"
+          }
+        ]
+      }
+    }
+  }
+}
+EOL
+
+# Start CloudWatch agent
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json -s
+
+# Install code deploy agent
+sudo yum install ruby -y
+sudo yum install wget -y
+cd /home/ec2-user
+wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install
+chmod +x ./install
+sudo ./install auto
+sudo systemctl start codedeploy-agent
 ```
 
-## User data scripts
-#### Install NGINX
-For [AWS solutions - 06](https://youtu.be/snQlL0fJI3Q) and  [AWS solutions - 07](https://youtu.be/eRX1FI2cFi8)
+## Setting up the Application Tier
+#### User data script
 
 ```bash
 #!/bin/bash 
-# Update package lists 
-yum update -y 
+# Update package list and install required packages 
+sudo yum update -y
 
-# Install Nginx 
-yum install -y nginx 
+# Install Node.js
+curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash - 
+sudo yum install -y nodejs 
 
-# Stop and disable default service (optional) 
-systemctl stop nginx 
-systemctl disable nginx 
+# Install PM2 globally 
+sudo npm install -g pm2 
 
-# Create a custom welcome message file 
-echo "Welcome to Presentation Tier EC2 instance in Availability Zone B." > /usr/share/nginx/html/index.html 
+# Define the log directory and ensure it exists 
+LOG_DIR="/var/log/react-node-mysql-app/backend" 
+mkdir -p $LOG_DIR 
+sudo chown -R root:root $LOG_DIR
 
-# Start and enable the Nginx service 
-systemctl start nginx 
-systemctl enable nginx
+# Create the combined.log file
+sudo touch $LOG_DIR/combined.log
+sudo chown root:root $LOG_DIR/combined.log  # Set ownership to root
+
+# Create the error.log file
+sudo touch $LOG_DIR/error.log
+sudo chown root:root $LOG_DIR/error.log  # Set ownership to root
+
+# Ensure PM2 restarts on reboot as root
+sudo -u root pm2 startup systemd 
+sudo -u root pm2 save 
+
+# Install CloudWatch agent
+sudo yum install -y amazon-cloudwatch-agent
+
+# Create CloudWatch agent configuration
+sudo tee /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json > /dev/null <<EOL
+{
+  "logs": {
+    "logs_collected": {
+      "files": {
+        "collect_list": [
+          {
+            "file_path": "/var/log/react-node-mysql-app/backend/combined.log",
+            "log_group_name": "node-app-logs-backend",
+            "log_stream_name": "{instance_id}-combined-log",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/log/react-node-mysql-app/backend/error.log",
+            "log_group_name": "node-app-logs-backend",
+            "log_stream_name": "{instance_id}-error-log",
+            "timestamp_format": "%Y-%m-%d %H:%M:%S"
+          },
+          {
+            "file_path": "/var/log/aws/codedeploy-agent/codedeploy-agent.log",
+            "log_group_name": "codedeploy-agent-logs-backend",
+            "log_stream_name": "{instance_id}-agent-log"
+          },
+          {
+            "file_path": "/opt/codedeploy-agent/deployment-root/deployment-logs/codedeploy-agent-deployments.log",
+            "log_group_name": "codedeploy-agent-logs-backend",
+            "log_stream_name": "{instance_id}-codedeploy-agent-deployment-log"
+          },
+          {
+            "file_path": "/tmp/codedeploy-agent.update.log",
+            "log_group_name": "codedeploy-agent-logs-backend",
+            "log_stream_name": "{instance_id}-codedeploy-agent-updater-log"
+          }
+        ]
+      }
+    }
+  }
+}
+EOL
+
+# Start CloudWatch agent
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json -s
+
+# Install code deploy agent
+sudo yum install ruby -y
+sudo yum install wget -y
+cd /home/ec2-user
+wget https://aws-codedeploy-us-east-1.s3.us-east-1.amazonaws.com/latest/install
+chmod +x ./install
+sudo ./install auto
+sudo systemctl start codedeploy-agent
 ```
