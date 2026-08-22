@@ -178,9 +178,9 @@ function App() {
    // };
 
    return (
-      <div className='h-screen font-mono p-4'>
-         <header className='py-2 border-b'>
-            <h1 className='text-center font-bold text-5xl'>Dashboard</h1>
+      <div className='h-screen font-mono p-4 bg-blue-100'>
+         <header className='py-2 border-b border-slate-600'>
+            <h1 className='text-center font-bold text-5xl text-green-400'>🚀 Dashboard v2.0</h1>
          </header>
          <main className='py-4 px-4 space-y-6'>
             <div className='space-x-4'>
